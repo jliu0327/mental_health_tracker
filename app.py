@@ -10,9 +10,10 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     conn = db_connection()
-    users = conn.execute('SELECT * FROM users').fetchall()
+    cur = conn.cursor()
+    users = cur.execute('SELECT * FROM users').fetchall()
     conn.close
-    return render_template("index.html", users=users)
+    return render_template("layout.html", users=users)
 
 # connect to same db 
 def db_connection():
