@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-danger text-center">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="/register" method="post">
+        <div class="mb-3 d-flex justify-content-center gap-4">
+            <input autocomplete="off" autofocus class="form-control custom-width1" name="first" placeholder="First Name" type="text">
+            <input autocomplete="off" autofocus class="form-control custom-width1" name="last" placeholder="Last Name" type="text">  
+        </div>
+        <div class="mb-3 d-flex justify-content-center gap-4">
+            <select class="form-select custom-width1" id="gender" name="gender">
+                <option disabled selected value="">Gender</option>
+                {% for gender in genders %}
+                    <option value="{{ gender }}">{{ gender }}</option>
+                {% endfor %}
+            </select>
+            <input autocomplete="off" autofocus class="form-control custom-width1" name="dob" placeholder="Date of Birth" type="date">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto custom-width2" name="email" placeholder="Email Address" type="email">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto custom-width2" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto custom-width2" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto custom-width2" name="confirmation" placeholder="Confirm Password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+{% endblock %}

@@ -3,6 +3,21 @@
     font-size: xx-large;
 }
 
-.nav-item {
-    text-align:;
+.nav-link:hover {
+    background-color: lightgray;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.big-padding {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+.custom-width1 {
+    width: 200px;
+}
+
+.custom-width2 {
+    width: 425px;
 }
