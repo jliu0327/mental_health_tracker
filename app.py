@@ -17,10 +17,11 @@ GENDERS = [
     "Nonbinary"
 ]
 
-
 # connect to same db 
 def db_connection():
     conn = sqlite3.connect('mental_health.db')
+    # Enable dict-like access to rows
+    conn.row_factory = sqlite3.Row
     return conn
 
 
@@ -36,7 +37,44 @@ def index():
 # Log in users
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    # Forget any user id
+    session.clear()
+
+    # User reached route via POST
+    if request.method == "POST":
+        if not request.form.get("username"):
+            flash("Username required")
+            return redirect("/login")
+        if not request.form.get("password"):
+            flash("Password required")
+            return redirect("/login")
+        
+        # Connect to database
+        conn = db_connection()
+        cur = conn.cursor()
+        # Query database for username
+        cur.execute(
+            "SELECT * FROM users WHERE username = ?", (request.form.get("username"),))
+        row = cur.fetchone()
+        if row is None or not check_password_hash(
+            row["hash"], request.form.get("password")
+        ):
+            flash("Invalid username and/or password. Please try again")
+            return redirect("/login")
+        
+        # Remember user id
+        session["user_id"] = row["id"]
+        # Redirect user to homepage
+        return redirect("/")
+    else:
+        return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    # Forget user_id
+    session.clear()
+    # Redirect back to login page
+    return redirect("/")
 
 
 # Register user
@@ -48,27 +86,47 @@ def register():
         last_name = request.form.get("last")
         gender = request.form.get("gender")
         date_of_birth = request.form.get("dob")
-        email = request.form.get("email")
         username = request.form.get("username")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
 
         # Check if nothing is entered
-        if not all([first_name, last_name, gender, date_of_birth, email, username, password]):
+        if not all([first_name, last_name, gender, date_of_birth, username, password]):
             flash('Please fill out all the fields')
-            return redirect("/register")
-        
-        # Validate user input and email formatting
-        if not re.search("^[a-zA-z0-9.+]+@[a-zA-Z0-9.-]+\.com$", email):
-            flash('Inaccurate email format')
             return redirect("/register")
 
         # Check if password and confirmation match
         if password != confirmation:
             flash('Passwords do not match')
             return redirect("/register")
+        
+        # Connect to database
+        conn = db_connection()
+        cur = conn.cursor()
+        # Check if username is taken
+        rows = cur.execute("SELECT * FROM users WHERE username = ?", (username,))
+        existing_user = rows.fetchone()
+        if existing_user:
+            flash("Username already taken")
+            return redirect("/register")
+        
+        # Hash the password
+        hash_password = generate_password_hash(password)
+        # Insert information into database
+        cur.execute("INSERT INTO users (first_name, last_name, gender, dob, username, hash) VALUES (?, ?, ?, ?, ?, ?)",
+                    (first_name, last_name, gender, date_of_birth, username, hash_password))
+        
+        # Commit changes and close connection
+        conn.commit()
+        conn.close()
 
-    return render_template("register.html", genders=GENDERS)
+        # Retrieve id of newly inserted user
+        user_id = cur.lastrowid
+        session["user_id"] = user_id
+        # Redirect user to homepage
+        return redirect("/")
+    else:
+        return render_template("register.html", genders=GENDERS)
 
 
 

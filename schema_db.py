@@ -10,8 +10,12 @@ cur = conn.cursor()
 cur.execute('''
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        first_name TEXT NOT NULL,
+        last_name TEXT NOT NULL,
+        gender TEXT NOT NULL CHECK (gender IN ('Male', 'Female', 'Nonbinary')),
+        dob DATE NOT NULL,
         username TEXT NOT NULL,
-        password TEXT NOT NULL
+        hash TEXT NOT NULL
     )
 ''')
 
