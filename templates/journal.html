@@ -5,12 +5,28 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/journal" method="post">
+    <form action="/entry" method="post">
+        <div style="text-align: left; padding-bottom: 10px;">Date:</div>
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="date" type="date" min="{{ birthdate }}" max="{{ today }}">
+            <input autocomplete="off" class="form-control w-auto" name="date" type="date" min="{{ birthdate }}" max="{{ today }}">
+        </div>
+        <div style="text-align: left; padding-bottom: 10px;">How are you feeling?</div>
+        <div class="mb-3">
+            <textarea autocomplete="off" class="form-control mb-3" name="content "rows="7"></textarea>
         </div>
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="entry" placeholder="How are you doing?" type="text">
+            <button class="btn btn-primary" type="submit">Submit</button>
         </div>
     </form>
+
+    <hr>
+
+    <h2 style="padding-top: 15px;"><b>Your Entries</b></h2>
+    {% for entry in entries %}
+        <div class="entry-box">
+            <p>{{ entry["date"] }}</p>
+            <p>{{ entry["content"] }}</p>
+        </div>
+    {% endfor %}
+
 {% endblock %}

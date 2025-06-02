@@ -125,6 +125,40 @@ def register():
         return render_template("register.html", genders=GENDERS, birthdate=birthdate, min_date=min_date)
 
 
+@app.route("/entry", methods=["GET", "POST"])
+@login_required
+def journal_log():
+    # Connect to database
+    conn = db_connection()
+    cur = conn.cursor()
+
+    if request.method == "POST":
+        # Retrieve information from journal page
+        entry_date = request.form.get("date")
+        if not entry_date:
+            flash("Please enter the date")
+            return redirect("/entry")
+        content = request.form.get("content")
+        if not content:
+            flash("Text field is missing")
+            return redirect("entry")
+
+        # Insert data into table
+        cur.execute("INSERT INTO entries (user_id, date, content) VALUES (?, ?, ?)",
+                    (session["user_id"], entry_date, content))
+        # Commit changes
+        conn.commit()
+
+        # Executes query and prepares the query, but does not return data
+    cur.execute("SELECT date, content FROM entries WHERE user_id = ? ORDER BY date DESC", (session["user_id"],))
+    # Retrieve all the rows from result set as a list of tuples
+    entries = cur.fetchall()
+    # Close connection
+    conn.close()
+
+    today = date.today()
+    return render_template("journal.html", today=today, entries=entries)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
