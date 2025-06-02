@@ -16,6 +16,7 @@
     {% endwith %}
 
     <form action="/register" method="post">
+        <h2 style="margin-bottom: 2rem;">Fill out the information below to sign up</h2>
         <div class="mb-3 d-flex justify-content-center gap-4">
             <input autocomplete="off" autofocus class="form-control custom-width1" name="first" placeholder="First Name" type="text">
             <input autocomplete="off" autofocus class="form-control custom-width1" name="last" placeholder="Last Name" type="text">  
@@ -27,7 +28,7 @@
                     <option value="{{ gender }}">{{ gender }}</option>
                 {% endfor %}
             </select>
-            <input autocomplete="off" autofocus class="form-control custom-width1" name="dob" placeholder="Date of Birth" type="date">
+            <input autocomplete="off" autofocus class="form-control custom-width1" name="dob" type="date" min="{{ min_date }}" max="{{ birthdate }}">
         </div>
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto custom-width2" name="username" placeholder="Username" type="text">

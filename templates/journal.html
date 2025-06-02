@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Journal Entry
+{% endblock %}
+
+{% block main %}
+    <form action="/journal" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="date" type="date" min="{{ birthdate }}" max="{{ today }}">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="entry" placeholder="How are you doing?" type="text">
+        </div>
+    </form>
+{% endblock %}

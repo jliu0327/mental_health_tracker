@@ -1,10 +1,9 @@
 import os
 
 from flask import Flask, flash, redirect, render_template, request, session
-import sqlite3
-from datetime import datetime
-import re
+from datetime import date, datetime
 from werkzeug.security import check_password_hash, generate_password_hash
+from helper import db_connection, login_required
 
 # Configure application
 app = Flask(__name__)
@@ -17,15 +16,9 @@ GENDERS = [
     "Nonbinary"
 ]
 
-# connect to same db 
-def db_connection():
-    conn = sqlite3.connect('mental_health.db')
-    # Enable dict-like access to rows
-    conn.row_factory = sqlite3.Row
-    return conn
-
 
 @app.route("/")
+@login_required
 def index():
     conn = db_connection()
     cur = conn.cursor()
@@ -68,6 +61,7 @@ def login():
         return redirect("/")
     else:
         return render_template("login.html")
+
 
 @app.route("/logout")
 def logout():
@@ -126,7 +120,9 @@ def register():
         # Redirect user to homepage
         return redirect("/")
     else:
-        return render_template("register.html", genders=GENDERS)
+        min_date = "1965-01-01"
+        birthdate = date.today().replace(year=date.today().year - 10)
+        return render_template("register.html", genders=GENDERS, birthdate=birthdate, min_date=min_date)
 
 
 
