@@ -35,11 +35,12 @@ def login():
 
     # User reached route via POST
     if request.method == "POST":
-        if not request.form.get("username"):
-            flash("Username required")
-            return redirect("/login")
-        if not request.form.get("password"):
-            flash("Password required")
+        username = request.form.get("username")
+        password = request.form.get("password")
+        
+        ## Need to fix this
+        if not all([username, password]):
+            flash("Fields are missing")
             return redirect("/login")
         
         # Connect to database
@@ -47,10 +48,10 @@ def login():
         cur = conn.cursor()
         # Query database for username
         cur.execute(
-            "SELECT * FROM users WHERE username = ?", (request.form.get("username"),))
+            "SELECT * FROM users WHERE username = ?", username,)
         row = cur.fetchone()
         if row is None or not check_password_hash(
-            row["hash"], request.form.get("password")
+            row["hash"], password
         ):
             flash("Invalid username and/or password. Please try again")
             return redirect("/login")
@@ -158,6 +159,12 @@ def journal_log():
 
     today = date.today()
     return render_template("journal.html", today=today, entries=entries)
+
+
+@app.route("/flashtest")
+def flashtest():
+    flash("Test flash message!")
+    return redirect("/login")
 
 
 if __name__ == "__main__":
