@@ -30,30 +30,32 @@ def index():
 # Log in users
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    # Forget any user id
-    session.clear()
+    # Clear only user_id
+    session.pop("user_id", None)
 
     # User reached route via POST
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
         
-        ## Need to fix this
+        # database checking
         if not all([username, password]):
-            flash("Fields are missing")
+            flash('One or more fields are missing')
             return redirect("/login")
+        
         
         # Connect to database
         conn = db_connection()
         cur = conn.cursor()
         # Query database for username
         cur.execute(
-            "SELECT * FROM users WHERE username = ?", username,)
+            "SELECT * FROM users WHERE username = ?", (username,))
         row = cur.fetchone()
-        if row is None or not check_password_hash(
-            row["hash"], password
-        ):
-            flash("Invalid username and/or password. Please try again")
+        if row is None:
+            flash('Username does not exist')
+            return redirect("/login")
+        elif not check_password_hash(row["hash"], password):
+            flash("Invalid password. Please try again.")
             return redirect("/login")
         
         # Remember user id
@@ -102,7 +104,7 @@ def register():
         rows = cur.execute("SELECT * FROM users WHERE username = ?", (username,))
         existing_user = rows.fetchone()
         if existing_user:
-            flash("Username already taken")
+            flash('Username already taken')
             return redirect("/register")
         
         # Hash the password
@@ -136,12 +138,15 @@ def journal_log():
     if request.method == "POST":
         # Retrieve information from journal page
         entry_date = request.form.get("date")
-        if not entry_date:
-            flash("Please enter the date")
-            return redirect("/entry")
         content = request.form.get("content")
+        if not all([entry_date, content]):
+            flash('One or more fields are missing')
+            return redirect("/entry")
+        if not entry_date:
+            flash('Please enter the date')
+            return redirect("/entry")
         if not content:
-            flash("Text field is missing")
+            flash('Text field is missing')
             return redirect("entry")
 
         # Insert data into table
@@ -159,12 +164,6 @@ def journal_log():
 
     today = date.today()
     return render_template("journal.html", today=today, entries=entries)
-
-
-@app.route("/flashtest")
-def flashtest():
-    flash("Test flash message!")
-    return redirect("/login")
 
 
 if __name__ == "__main__":
