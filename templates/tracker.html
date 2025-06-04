@@ -17,6 +17,16 @@
 
     <form action="/tracker" method="post">
         <h2 class="mb-4">Mood Tracker</h2>
-
+        <div class="mb-3">
+            <h4 class="mb-3">How am I feeling today?</h4>
+        </div>
+        <div class="mb-3">
+            {% for mood in moods %}
+                <div class="form-check dflex align-items-center mb-2">
+                    <input class="form-check-input" id="mood{{ loop.index }}" name="mood" type="radio" value="{{ mood }}">
+                    <label class="form-check-label" for="mood{{ loop.index }}">{{ mood }}</label>
+                </div>
+            {% endfor %}
+        </div>
     </form>
 {% endblock %}

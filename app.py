@@ -171,10 +171,10 @@ def journal_log():
 @login_required
 def mood_tracker():
     if request.method == "POST":
-        selected_mood = request.form.get("mood")
-        flash(f"You selected {selected_mood}")
+        selected_choice = request.form.get("mood")
+        flash(f"You selected {selected_choice}")
         return redirect("/tracker")
-    return render_template("mood.html", moods=MOODS)
+    return render_template("tracker.html", moods=MOODS)
 
 if __name__ == "__main__":
     app.run(debug=True)
