@@ -1,2 +1,22 @@
 {% extends "layout.html" %}
 
+{% block title %}
+    Mood Tracker
+{% endblock %}
+
+{% block main %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-danger text-center">
+                {% for message in messages %}
+                    <p>Error: {{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="/tracker" method="post">
+        <h2 class="mb-4">Mood Tracker</h2>
+
+    </form>
+{% endblock %}

@@ -16,6 +16,13 @@ GENDERS = [
     "Nonbinary"
 ]
 
+MOODS = [
+    "😀 Great",
+    "🙂 Good",
+    "😐 Neutral",
+    "🙁 Not good",
+    "😞 Terrible"
+]
 
 @app.route("/")
 @login_required
@@ -139,15 +146,9 @@ def journal_log():
         # Retrieve information from journal page
         entry_date = request.form.get("date")
         content = request.form.get("content")
-        if not all([entry_date, content]):
+        if not entry_date or not content.strip():
             flash('One or more fields are missing')
             return redirect("/entry")
-        if not entry_date:
-            flash('Please enter the date')
-            return redirect("/entry")
-        if not content:
-            flash('Text field is missing')
-            return redirect("entry")
 
         # Insert data into table
         cur.execute("INSERT INTO entries (user_id, date, content) VALUES (?, ?, ?)",
@@ -165,6 +166,15 @@ def journal_log():
     today = date.today()
     return render_template("journal.html", today=today, entries=entries)
 
+
+@app.route("/tracker", methods=["GET", "POST"])
+@login_required
+def mood_tracker():
+    if request.method == "POST":
+        selected_mood = request.form.get("mood")
+        flash(f"You selected {selected_mood}")
+        return redirect("/tracker")
+    return render_template("mood.html", moods=MOODS)
 
 if __name__ == "__main__":
     app.run(debug=True)
