@@ -21,14 +21,27 @@ cur.execute('''
 
 cur.execute('''
     CREATE TABLE IF NOT EXISTS entries (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            user_id INTEGER NOT NULL,
-            date DATE NOT NULL,
-            content TEXT NOT NULL,
-            FOREIGN KEY (user_id) REFERENCES users(id))
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        user_id INTEGER NOT NULL,
+        date DATE NOT NULL,
+        content TEXT NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    )
 ''')
 
-
+cur.execute('''
+    CREATE TABLE IF NOT EXISTS tracker (
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        user_id INTEGER NOT NULL,
+        date DATE NOT NULL,
+        mood TEXT NOT NULL,
+        sleep TEXT NOT NULL,
+        diet TEXT NOT NULL,
+        energy TEXT NOT NULL,
+        stress TEXT NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+''')
 
 # Save (commit) the changes and close the connection
 conn.commit()

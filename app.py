@@ -156,7 +156,7 @@ def journal_log():
         # Commit changes
         conn.commit()
 
-        # Executes query and prepares the query, but does not return data
+    # Executes query and prepares the query, but does not return data
     cur.execute("SELECT date, content FROM entries WHERE user_id = ? ORDER BY date DESC", (session["user_id"],))
     # Retrieve all the rows from result set as a list of tuples
     entries = cur.fetchall()
@@ -170,11 +170,34 @@ def journal_log():
 @app.route("/tracker", methods=["GET", "POST"])
 @login_required
 def mood_tracker():
+    # Connect to database
+    conn = db_connection()
+    cur = conn.cursor()
+
     if request.method == "POST":
-        selected_choice = request.form.get("mood")
-        flash(f"You selected {selected_choice}")
-        return redirect("/tracker")
-    return render_template("tracker.html", moods=MOODS)
+        # Retrieve information from tracker page
+        today_date = request.form.get("date")
+        mood_today = request.form.get("mood_feeling")
+        sleep = request.form.get("mood_sleep")
+        diet = request.form.get("mood_diet")
+        energy = request.form.get("mood_energy")
+        stress = request.form.get("mood_stress")
+
+        # Data validation if user missed a field
+        if not all([today_date, mood_today, sleep, diet, energy, stress]):
+            flash("One or more fields is missing")
+            return redirect("/tracker")
+
+        # Insert data into table
+        cur.execute("INSERT INTO tracker (user_id, date, mood, sleep, diet, energy, stress) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    (session["user_id"], today_date, mood_today, sleep, diet, energy, stress))
+        # Commit changes
+        conn.commit()
+        conn.close()
+    else:
+        today = date.today()
+        birthdate = date.today().replace(year=date.today().year - 10)
+        return render_template("tracker.html", moods=MOODS, birthdate=birthdate, today=today)
 
 if __name__ == "__main__":
     app.run(debug=True)
