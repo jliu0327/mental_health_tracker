@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    My Goals
+{% endblock %}
+
+{% block main %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-danger text-center">
+                {% for message in messages %}
+                    <p>Error: {{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="/goals" method="post">
+        <div class="am-1">Goals I want to accomplish:</div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control" name="set_goals" type="text">
+        </div>
+        <div class="mb-3 d-flex justify-content gap-4">
+            <div>
+                <div class="am-1">Category</div>
+                <select class="form-select mb-3 custom-width4" id="category" name="category">
+                    <option disabled selected value=""></option>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <div class="am-1">Target Date:</div>
+                <input class="form-control mb-3 custom-width4" name="date" type="date" min="{{ today }}">
+            </div>
+            <div>
+                <div class="am-1">Goal Priority</div>
+                <select class="form-select mb-3 custom-width4" id="priority" name="priority">
+                    <option disabled selected value=""></option>
+                    {% for priority in priorities %}
+                        <option value="{{ priority }}">{{ priority }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="am-1">Additional Thoughts</div>
+        <div class="mb-3">
+            <textarea autocomplete="off" class="form-control" name="description" rows="3" placeholder="Why / How"></textarea>
+        </div>
+
+    </form>
+{% endblock %}

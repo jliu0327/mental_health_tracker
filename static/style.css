@@ -14,10 +14,23 @@
     padding-bottom: 5rem;
 }
 
+.am-1 {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
 .custom-width1 {
     width: 200px;
 }
 
 .custom-width2 {
     width: 425px;
+}
+
+.custom-width3 {
+    width: 950px;
+}
+
+.custom-width4 {
+    width: 400px;
 }

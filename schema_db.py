@@ -19,6 +19,7 @@ cur.execute('''
     )
 ''')
 
+# Create the entries table
 cur.execute('''
     CREATE TABLE IF NOT EXISTS entries (
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -29,6 +30,7 @@ cur.execute('''
     )
 ''')
 
+# Create the tracker table
 cur.execute('''
     CREATE TABLE IF NOT EXISTS tracker (
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -42,6 +44,9 @@ cur.execute('''
         FOREIGN KEY (user_id) REFERENCES users(id)
     )
 ''')
+
+# Create the goals table
+
 
 # Save (commit) the changes and close the connection
 conn.commit()

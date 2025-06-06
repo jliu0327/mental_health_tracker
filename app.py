@@ -3,26 +3,12 @@ import os
 from flask import Flask, flash, redirect, render_template, request, session
 from datetime import date, datetime
 from werkzeug.security import check_password_hash, generate_password_hash
-from helper import db_connection, login_required
+from helper import db_connection, login_required, GENDERS, MOODS, CATEGORIES, PRIORITIES
 
 # Configure application
 app = Flask(__name__)
 app.secret_key = 'wNZZI1OYWT'
 
-# Gender list for registration
-GENDERS = [
-    "Male",
-    "Female",
-    "Nonbinary"
-]
-
-MOODS = [
-    "😀 Great",
-    "🙂 Good",
-    "😐 Neutral",
-    "🙁 Not good",
-    "😞 Terrible"
-]
 
 @app.route("/")
 @login_required
@@ -193,11 +179,25 @@ def mood_tracker():
                     (session["user_id"], today_date, mood_today, sleep, diet, energy, stress))
         # Commit changes
         conn.commit()
+        # Close connection
         conn.close()
     else:
         today = date.today()
         birthdate = date.today().replace(year=date.today().year - 10)
         return render_template("tracker.html", moods=MOODS, birthdate=birthdate, today=today)
+
+
+@app.route("/goals", methods=["GET", "POST"])
+@login_required
+def goal_tracker():
+    # Connect to database
+    conn = db_connection()
+    cur = conn.cursor()
+
+    today = date.today()
+
+    return render_template("goal.html", today=today)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

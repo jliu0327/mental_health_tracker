@@ -30,6 +30,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbar">
+                        <!-- Appears only if user is signed in -->
                         {% if session["user_id"] %}
                             <ul class="navbar-nav me-auto mt-1">
                                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
@@ -41,6 +42,7 @@
                             <ul class="navbar-nav ms-auto mt-1">
                                 <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
                             </ul>
+                        <!-- Otherwise, navigation bar shows log in / register -->    
                         {% else %}
                             <ul class="navbar-nav ms-auto mt-1">
                                 <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>

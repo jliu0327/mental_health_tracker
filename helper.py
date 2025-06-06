@@ -2,6 +2,43 @@ import sqlite3
 from functools import wraps
 from flask import session, redirect
 
+
+# Gender list for registration
+GENDERS = [
+    "Male",
+    "Female",
+    "Nonbinary"
+]
+
+# Mood list for tracking wellness
+MOODS = [
+    "😀 Great",
+    "🙂 Good",
+    "😐 Neutral",
+    "🙁 Not good",
+    "😞 Terrible"
+]
+
+# Categories for Goals
+CATEGORIES = [
+    "Health/Wellness",
+    "Habits",
+    "Therapy",
+    "Social",
+    "Personal",
+    "Self-care/Enjoyment",
+    "Work/School",
+    "Other"
+]
+
+# Goal Priority
+PRIORITIES = [
+    "Low",
+    "Medium",
+    "High"
+]
+
+
 # connect to same database
 def db_connection():
     conn = sqlite3.connect('mental_health.db')
@@ -22,3 +59,4 @@ def login_required(f):
         # if user is logged in, runs the original function(f) with any necessary inputs
         return f(*args, **kwargs)
     return decorated_function
+
