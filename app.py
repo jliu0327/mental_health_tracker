@@ -194,6 +194,32 @@ def goal_tracker():
     conn = db_connection()
     cur = conn.cursor()
 
+    if request.method == "POST":
+        goals = request.form.get("set_goals")
+        category = request.form.get("category")
+        description = request.form.get("description")
+        due_date = request.form.get("date")
+        priority = request.form.get("priority")
+
+        if not goals:
+            flash("Please fill out the goal field if you want to submit")
+            return redirect("/goals")
+        elif not category:
+            flash("Please fill out the category before submitting")
+            return redirect("/goals")
+        
+        # Insert data into table
+        cur.execute("INSERT INTO goals (user_id, goal_title, category, description, due_date, priority) VALUES (?, ?, ?, ?, ?, ?)",
+                    session["user_id"], goals, category, description, due_date, priority)
+        # Commit changes
+        conn.commit()
+
+        # Show user's goals
+        cur.execute("SELECT * FROM goals WHERE user_id = ?", (session["user_id"],))
+        cur.fetchall()
+        # Close connection
+        conn.close()
+
     today = date.today()
 
     return render_template("goal.html", today=today)

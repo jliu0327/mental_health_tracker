@@ -9,7 +9,7 @@ cur = conn.cursor()
 # Create the users table if it doesn't exist
 cur.execute('''
     CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        id INTEGER PRIMARY KEY,
         first_name TEXT NOT NULL,
         last_name TEXT NOT NULL,
         gender TEXT NOT NULL CHECK (gender IN ('Male', 'Female', 'Nonbinary')),
@@ -22,7 +22,7 @@ cur.execute('''
 # Create the entries table
 cur.execute('''
     CREATE TABLE IF NOT EXISTS entries (
-        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        id INTEGER PRIMARY KEY,
         user_id INTEGER NOT NULL,
         date DATE NOT NULL,
         content TEXT NOT NULL,
@@ -33,7 +33,7 @@ cur.execute('''
 # Create the tracker table
 cur.execute('''
     CREATE TABLE IF NOT EXISTS tracker (
-        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        id INTEGER PRIMARY KEY,
         user_id INTEGER NOT NULL,
         date DATE NOT NULL,
         mood TEXT NOT NULL,
@@ -46,7 +46,19 @@ cur.execute('''
 ''')
 
 # Create the goals table
-
+cur.execute('''
+    CREATE TABLE IF NOT EXISTS goals (
+        id INTEGER PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        goal_title TEXT NOT NULL,
+        category TEXT NOT NULL,
+        description TEXT,
+        due_date DATE,
+        priority TEXT CHECK (priority IN ('Low', 'Medium', 'High')) DEFAULT 'Medium',
+        completed BOOLEAN DEFAULT 0,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+''')
 
 # Save (commit) the changes and close the connection
 conn.commit()
