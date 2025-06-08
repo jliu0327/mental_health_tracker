@@ -15,6 +15,7 @@
         {% endif %}
     {% endwith %}
 
+    <!-- Form to create a goal -->
     <form action="/goals" method="post">
         <div class="am-1">Goals I want to accomplish:</div>
         <div class="mb-3">
@@ -51,24 +52,37 @@
         <div class="text-end text-center">
             <button class="btn btn-primary" type="submit">Add Goal</button>
         </div>
-
-        <hr>
-
-        <h3 style="padding-top: 15px; padding-bottom: 15px;">My Goals</h3>
-        <table class="table-striped">
-            <thead>
-                <tr>
-                    <th>✔</th>
-                    <th>Goal Title</th>
-                    <th>Category</th>
-                    <th>Target Date</th>
-                    <th>Descrption</th>
-                    <th>Priority</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-        </table>
     </form>
+    <!-- Visualization of goals table-->
+    <hr>
+    <h3 style="padding-top: 15px; padding-bottom: 15px;">My Goals</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Due Date</th>
+                <th>Priority Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for goal in goals %}
+                <tr>
+                    <td>
+                        <form action="/complete_goal" method="post">
+                            <input type="hidden" name="goal_id" value="{{ goal['id'] }}">
+                            <input type="checkbox" name="completed" onchange="this.form.submit()" {% if goal['completed'] %}checked{% endif %}>
+                        </form>
+                    </td>
+                    <td>{{ goal['goal_title'] }}</td>
+                    <td>{{ goal['category'] }}</td>
+                    <td>{{ goal['description'] }}</td>
+                    <td>{{ goal['due_date'] }}</td>
+                    <td>{{ goal['priority'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
 {% endblock %}

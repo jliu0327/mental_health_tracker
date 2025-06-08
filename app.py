@@ -141,6 +141,8 @@ def journal_log():
                     (session["user_id"], entry_date, content))
         # Commit changes
         conn.commit()
+        conn.close()
+        return redirect("/entry")
 
     # Executes query and prepares the query, but does not return data
     cur.execute("SELECT date, content FROM entries WHERE user_id = ? ORDER BY date DESC", (session["user_id"],))
@@ -181,6 +183,7 @@ def mood_tracker():
         conn.commit()
         # Close connection
         conn.close()
+        return redirect("/tracker")
     else:
         today = date.today()
         birthdate = date.today().replace(year=date.today().year - 10)
@@ -210,19 +213,40 @@ def goal_tracker():
         
         # Insert data into table
         cur.execute("INSERT INTO goals (user_id, goal_title, category, description, due_date, priority) VALUES (?, ?, ?, ?, ?, ?)",
-                    session["user_id"], goals, category, description, due_date, priority)
+                    (session["user_id"], goals, category, description, due_date, priority))
         # Commit changes
         conn.commit()
-
-        # Show user's goals
-        cur.execute("SELECT * FROM goals WHERE user_id = ?", (session["user_id"],))
-        cur.fetchall()
-        # Close connection
         conn.close()
+        return redirect("/goals")
+
+    # Show user's goals
+    cur.execute("SELECT * FROM goals WHERE user_id = ?", (session["user_id"],))
+    goals_data = cur.fetchall()
+    # Close connection
+    conn.close()
 
     today = date.today()
+    return render_template("goal.html", goals=goals_data, today=today, categories=CATEGORIES, priorities=PRIORITIES)
 
-    return render_template("goal.html", today=today)
+
+@app.route("/complete_goal", methods=["POST"])
+@login_required
+def complete_goal():
+    conn = db_connection()
+    cur = conn.cursor()
+
+    goal_id = request.form.get("goal_id")
+    # Always set to complete when checked
+    if request.form.get("completed"):
+        is_complete = 1
+    else:
+        is_complete = 0
+
+    cur.execute("UPDATE goals SET completed = ? WHERE id = ? AND user_id = ?", (is_complete, goal_id, session["user_id"]))
+    conn.commit()
+    conn.close()
+
+    return redirect("/goals")
 
 
 if __name__ == "__main__":
