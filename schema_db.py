@@ -60,6 +60,23 @@ cur.execute('''
     )
 ''')
 
+# Create the user_profile table
+cur.execute('''
+    CREATE TABLE IF NOT EXISTS user_profiles (
+        user_id INTEGER PRIMARY KEY,
+        first_name TEXT NOT NULL,
+        middle_name TEXT,
+        last_name TEXT NOT NULL,
+        gender TEXT NOT NULL CHECK (gender IN ('Male', 'Female', 'Nonbinary')),
+        birthday DATE,
+        location TEXT,
+        username TEXT NOT NULL,
+        bio TEXT,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+''')
+
+
 # Save (commit) the changes and close the connection
 conn.commit()
 conn.close()
