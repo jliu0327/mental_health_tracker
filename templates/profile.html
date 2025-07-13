@@ -5,5 +5,38 @@
 {% endblock %}
 
 {% block main %}
-    <h2 class="mb-4">My Profile</h2>
+      <form action="/profile" method="post">
+    <div class="mb-3 d-flex justify-content-center gap-4">
+      <div>
+        <div class="am-1">First name
+          <input class="form-control custom-width4" name="first-name">
+        </div>
+      </div>
+      <div>
+        <div class="am-1">Last name
+          <input class="form-control custom-width4" name="last-name">
+        </div>
+      </div>
+    </div>
+    <div class="mb-3 d-flex justify-content-center gap-4">
+      <div class="am-1">Username
+        <input class="form-control custom-width5" name="username">
+      </div>
+    </div>
+    <div class="mb-3 d-flex justify-content-center gap-4">
+      <div class="am-1">Current Password
+        <input class="form-control custom-width5" name="current-password">
+      </div>
+    </div>
+    <div class="mb-3 d-flex justify-content-center gap-4">
+      <div class="am-1">New Password
+        <input class="form-control custom-width5" name="new-password" placeholder="New password">
+      </div>
+    </div>
+    <div class="mb-3 d-flex justify-content-center gap-4">
+      <div class="am-1">Confirm Password
+        <input class="form-control custom-width5" name="confirm-password" placeholder="Confirm new password">
+      </div>
+    </div>
+  </form>
 {% endblock %}

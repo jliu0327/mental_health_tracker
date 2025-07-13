@@ -252,7 +252,16 @@ def complete_goal():
 @app.route("/profile")
 @login_required
 def profile():
-    return render_template("profile.html")
+    if request.method == "POST":
+        return redirect("/profile")
+    else:
+        conn = db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT first_name, last_name, username FROM users WHERE id = ?", (session["user_id"],))
+        user = cur.fetchone()
+        conn.close()
+
+        return render_template("profile.html",)
 
 
 if __name__ == "__main__":
