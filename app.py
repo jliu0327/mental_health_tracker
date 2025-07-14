@@ -261,7 +261,10 @@ def profile():
         user = cur.fetchone()
         conn.close()
 
-        return render_template("profile.html",)
+        return render_template("profile.html",
+                               first_name = user[0],
+                               last_name = user[1],
+                               username = user[2])
 
 
 if __name__ == "__main__":
