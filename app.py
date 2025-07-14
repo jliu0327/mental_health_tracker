@@ -253,9 +253,17 @@ def complete_goal():
 @login_required
 def profile():
     if request.method == "POST":
+        conn = db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT hash FROM users WHERE id = ?", (session["user_id"],))
+        row = cur.fetchone()
+        stored_hash = row[0]
+
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
+        current_password = request.form.get("current_password")
         
+
 
         return redirect("/profile")
     else:
