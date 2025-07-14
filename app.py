@@ -253,6 +253,10 @@ def complete_goal():
 @login_required
 def profile():
     if request.method == "POST":
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        
+
         return redirect("/profile")
     else:
         conn = db_connection()
