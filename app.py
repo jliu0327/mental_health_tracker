@@ -15,9 +15,23 @@ app.secret_key = 'wNZZI1OYWT'
 def index():
     conn = db_connection()
     cur = conn.cursor()
-    users = cur.execute('SELECT * FROM users').fetchall()
-    conn.close
-    return render_template("index.html", users=users)
+
+    # get user id
+    user_id = session["user_id"]
+
+    # get latest 5 journal entries
+    cur.execute("SELECT date, content FROM content WHERE user_id = ? ORDER BY date DESC LIMIT 5", (user_id,))
+    journal_entries = cur.fetchall()
+
+    # get latest 5 mood tracker entries
+    cur.execute("SELECT date, mood, sleep, diet, energy, stress FROM tracker WHERE user_id = ? ORDER BY date DESC LIMIT 5", (user_id,))
+    mood_entries = cur.fetchall()
+
+    # get latest 5 goal entries
+    cur.execute("SELECT goal_title, category, description, due_date, priority FROM goals WHERE user_id = ? ORDER BY due_date DESC LIMIT 5", (user_id,))
+    goal_entries = cur.fetchall()
+    
+    return render_template("index.html")
 
 
 # Log in users
@@ -249,10 +263,16 @@ def complete_goal():
     return redirect("/goals")
 
 
-@app.route("/profile")
+@app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
     if request.method == "POST":
+        action = request.form.get("action")
+        # cancel changes if "Cancel" button is selected
+        if action == "cancel":
+            return redirect("profile")
+        
+        # proceed with save logic
         conn = db_connection()
         cur = conn.cursor()
         cur.execute("SELECT hash FROM users WHERE id = ?", (session["user_id"],))
@@ -276,10 +296,17 @@ def profile():
                                    first_name = first_name,
                                    last_name = last_name,
                                    username = username)
+        else:
+            hash_password = generate_password_hash(new_password)
         
         ## update table if they click "save"
-        
+        cur.execute("UPDATE users SET first_name = ?, last_name = ?, username = ?, hash = ? WHERE id = ?",
+                    (first_name, last_name, username, hash_password, session["user_id"]))
+        conn.commit()
+        conn.close()
 
+        flash("Profile updated successfully!")
+        return redirect("profile")
     else:
         conn = db_connection()
         cur = conn.cursor()
