@@ -261,11 +261,25 @@ def profile():
 
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
+        username = request.form.get("username")
         current_password = request.form.get("current_password")
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+        
+        if not check_password_hash(stored_hash, current_password):
+            flash("Current password is incorrect. Please try again.")
+            return redirect("/profile")
+        
+        if new_password != confirm_password:
+            flash("New passwords do not match.")
+            return render_template("profile.html",
+                                   first_name = first_name,
+                                   last_name = last_name,
+                                   username = username)
+        
+        ## update table if they click "save"
         
 
-
-        return redirect("/profile")
     else:
         conn = db_connection()
         cur = conn.cursor()
