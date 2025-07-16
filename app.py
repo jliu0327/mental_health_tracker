@@ -20,7 +20,7 @@ def index():
     user_id = session["user_id"]
 
     # get latest 5 journal entries
-    cur.execute("SELECT date, content FROM content WHERE user_id = ? ORDER BY date DESC LIMIT 5", (user_id,))
+    cur.execute("SELECT date, content FROM entries WHERE user_id = ? ORDER BY date DESC LIMIT 5", (user_id,))
     journal_entries = cur.fetchall()
 
     # get latest 5 mood tracker entries
@@ -28,10 +28,15 @@ def index():
     mood_entries = cur.fetchall()
 
     # get latest 5 goal entries
-    cur.execute("SELECT goal_title, category, description, due_date, priority FROM goals WHERE user_id = ? ORDER BY due_date DESC LIMIT 5", (user_id,))
+    cur.execute("SELECT goal_title, category, description, due_date, priority FROM goals WHERE user_id = ? ORDER BY due_date LIMIT 5", (user_id,))
     goal_entries = cur.fetchall()
+
+    conn.close()
     
-    return render_template("index.html")
+    return render_template("index.html",
+                           journal_entries = journal_entries,
+                           mood_entries = mood_entries,
+                           goal_entries = goal_entries)
 
 
 # Log in users
