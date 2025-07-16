@@ -7,7 +7,7 @@
 {% block main %}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="alert alert-danger text-center">
+            <div class="alert alert-danger text-center js-alert">
                 {% for message in messages %}
                     <p>Error: {{ message }}</p>
                 {% endfor %}

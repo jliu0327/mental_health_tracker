@@ -6,7 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from helper import db_connection, login_required, GENDERS, MOODS, CATEGORIES, PRIORITIES
 
 # Configure application
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.secret_key = 'wNZZI1OYWT'
 
 

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-    <h2 class="heading-space">Mood Tracker Log</h2>
+    <h2 class="heading-space">Recent Journal Log</h2>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Date</th>
@@ -18,6 +18,7 @@
             </tr>
         {% endfor %}
     </table>
+    <h2 class="heading-space">Mood Tracker</h2>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Date</th>
@@ -35,6 +36,25 @@
                 <td>{{ mood['diet'] }}</td>
                 <td>{{ mood['energy'] }}</td>
                 <td>{{ mood['stress'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <h2 class="heading-space">Current Goals</h2>
+        <table class="table table-striped table-bordered">
+        <tr>
+            <th>Goal</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Priority</th>
+        </tr>
+        {% for goal in goal_entries %}
+            <tr>
+                <td>{{ goal['goal_title'] }}</td>
+                <td>{{ goal['category'] }}</td>
+                <td>{{ goal['description'] }}</td>
+                <td>{{ goal['due_date'] }}</td>
+                <td>{{ goal['priority'] }}</td>
             </tr>
         {% endfor %}
     </table>
