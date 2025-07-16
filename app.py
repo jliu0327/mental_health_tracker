@@ -309,8 +309,6 @@ def profile():
                     (first_name, last_name, username, hash_password, session["user_id"]))
         conn.commit()
         conn.close()
-
-        flash("Profile updated successfully!")
         return redirect("profile")
     else:
         conn = db_connection()
