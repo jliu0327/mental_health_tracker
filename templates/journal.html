@@ -15,14 +15,16 @@
         {% endif %}
     {% endwith %}
 
-    <form action="/entry" method="post">
+    <form action="/entry" method="post" class="js-journal-form">
         <div style="text-align: left; padding-bottom: 10px;">Date:</div>
         <div class="mb-3">
             <input autocomplete="off" class="form-control w-auto" name="date" type="date" min="{{ birthdate }}" max="{{ today }}">
+            <div class="error-message js-date-error-message"></div>
         </div>
         <div style="text-align: left; padding-bottom: 10px;">How am I feeling?</div>
         <div class="mb-3">
             <textarea autocomplete="off" class="form-control mb-3" name="content" rows="7"></textarea>
+            <div class="error-message js-error-message2"></div>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary" type="submit">Submit</button>
