@@ -15,12 +15,12 @@
         {% endif %}
     {% endwith %}
 
-    <form action="/tracker" method="post">
+    <form action="/tracker" method="post" class="js-mood-form">
         <h2 class="mb-4">Mood Tracker</h2>
         <div style="text-align: left;">Date:</div>
         <div class="mb-3">
             <input autocomplete="off" class="form-control w-auto" name="date" type="date" min="{{ birthdate }}" max="{{ today }}">
-            <div class="error-message js-mood-error-message"></div>
+            <div class="error-message js-error-date"></div>
         </div>
         <!-- Mood today -->
         <div class="mb-3">
@@ -32,6 +32,7 @@
                 <label class="btn btn-outline-primary" for="mood_feeling{{ loop.index }}">{{ mood }}</label>
             {% endfor %}
         </div>
+        <div class="error-message js-error-mood_feeling"></div>
         <!--Sleep Last night -->
         <div class="mb-3 mt-4">
             <h4 class="mb-3 text-start">How was my sleep last night?</h4>
@@ -42,6 +43,7 @@
                 <label class="btn btn-outline-primary" for="mood_sleep{{ loop.index }}">{{ mood }}</label>
             {% endfor %}
         </div>
+        <div class="error-message js-error-mood_sleep"></div>
         <!--Diet today -->
         <div class="mb-3 mt-4">
             <h4 class="mb-3 text-start">How is my diet today?</h4>
@@ -52,6 +54,7 @@
                 <label class="btn btn-outline-primary" for="mood_diet{{ loop.index }}">{{ mood }}</label>
             {% endfor %}
         </div>
+        <div class="error-message js-error-mood_diet"></div>
         <!-- Energy today -->
         <div class="mb-3 mt-4">
             <h4 class="mb-3 text-start">How is my energy today?</h4>
@@ -62,6 +65,7 @@
                 <label class="btn btn-outline-primary" for="mood_energy{{ loop.index }}">{{ mood }}</label>
             {% endfor %}
         </div>
+        <div class="error-message js-error-mood_energy"></div>
         <!-- Stress management today -->
         <div class="mb-3 mt-4">
             <h4 class="mb-3 text-start">How has my stress level management been?</h4>
@@ -72,6 +76,7 @@
                 <label class="btn btn-outline-primary" for="mood_stress{{ loop.index }}">{{ mood }}</label>
             {% endfor %}
         </div>
+        <div class="error-message js-error-mood_stress"></div>
         <div class="mb-3 mt-4">
             <button class="btn btn-primary" type="submit">Submit</button>
         </div>

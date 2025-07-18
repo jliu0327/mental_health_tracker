@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('.js-journal-form');
-  if (!form) {
-    return;
-  }
+  if (!form) return;
 
   const dateField = form.querySelector('input[name="date"]');
   const contentField = form.querySelector('textarea[name="content"]');
