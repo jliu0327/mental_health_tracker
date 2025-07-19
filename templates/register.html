@@ -22,15 +22,19 @@
             <input autocomplete="off" class="form-control custom-width1" name="last" placeholder="Last Name" type="text">  
         </div>
         <div class="mb-3 d-flex justify-content-center gap-4">
-            <select class="form-select custom-width1" id="gender" name="gender">
-                <option disabled selected value="">Gender</option>
-                {% for gender in genders %}
-                    <option value="{{ gender }}">{{ gender }}</option>
-                {% endfor %}
-            </select>
-            <input autocomplete="off" class="form-control custom-width1" name="dob" type="date" min="{{ min_date }}" max="{{ birthdate }}">
+            <div class="am-1">Gender
+                <select class="form-select custom-width1" id="gender" name="gender">
+                    <option disabled selected value=""></option>
+                    {% for gender in genders %}
+                        <option value="{{ gender }}">{{ gender }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="am-1">Date of birth
+                <input autocomplete="off" class="form-control custom-width1" name="dob" type="date" min="{{ min_date }}" max="{{ birthdate }}">
+            </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 am-1">
             <input autocomplete="off" class="form-control mx-auto custom-width2" name="username" placeholder="Username" type="text">
         </div>
         <div class="mb-3">

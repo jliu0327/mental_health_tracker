@@ -1,3 +1,12 @@
+const prompts = [
+  "What is one thing I did well today?",
+  "What is something I learned about myself today?",
+  "What emotion stands out the most right now?",
+  "What is one kind thing I can do for myself tomorrow?",
+  "What is one thing that went well today?",
+  "Did anything make me smile or laugh today?"
+];
+
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('.js-journal-form');
   if (!form) return;
@@ -34,3 +43,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+function showPrompt() {
+  // Generate random prompt
+  const prompt = prompts[Math.floor(Math.random() * prompts.length)];
+  document.querySelector('.display-prompt').innerHTML = prompt;
+
+  // Enables input box to show up and users can type
+  const inputBox = document.querySelector('input[name="prompt_response"]');
+  inputBox.style.display = "block";
+
+  // Disable button once it has been clicked
+  const button = document.querySelector('#prompt-btn');
+  button.disabled = true;
+
+  // Change button text
+  button.textContent = "Prompt shown";
+}

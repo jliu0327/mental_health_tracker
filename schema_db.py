@@ -26,6 +26,7 @@ cur.execute('''
         user_id INTEGER NOT NULL,
         date DATE NOT NULL,
         content TEXT NOT NULL,
+        gratitude_content TEXT NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users(id)
     )
 ''')

@@ -151,20 +151,21 @@ def journal_log():
         # Retrieve information from journal page
         entry_date = request.form.get("date")
         content = request.form.get("content")
-        if not entry_date or not content.strip():
+        gratitude_content = request.form.get("prompt_response")
+        if not all([entry_date, content.strip(), gratitude_content.strip()]):
             flash('One or more fields are missing')
             return redirect("/entry")
 
         # Insert data into table
-        cur.execute("INSERT INTO entries (user_id, date, content) VALUES (?, ?, ?)",
-                    (session["user_id"], entry_date, content))
+        cur.execute("INSERT INTO entries (user_id, date, content, gratitude_content) VALUES (?, ?, ?, ?)",
+                    (session["user_id"], entry_date, content, gratitude_content))
         # Commit changes
         conn.commit()
         conn.close()
         return redirect("/entry")
 
     # Executes query and prepares the query, but does not return data
-    cur.execute("SELECT date, content FROM entries WHERE user_id = ? ORDER BY date DESC", (session["user_id"],))
+    cur.execute("SELECT date, content, gratitude_content FROM entries WHERE user_id = ? ORDER BY date DESC", (session["user_id"],))
     # Retrieve all the rows from result set as a list of tuples
     entries = cur.fetchall()
     # Close connection

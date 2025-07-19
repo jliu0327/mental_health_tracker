@@ -47,3 +47,8 @@
     color: red;
     text-align: left;
 }
+
+.display-prompt {
+    font-style: italic;
+    margin-top: 10px;
+}

@@ -16,15 +16,22 @@
     {% endwith %}
 
     <form action="/entry" method="post" class="js-journal-form">
-        <div style="text-align: left; padding-bottom: 10px;">Date:</div>
+        <div class="am-1">Date:</div>
         <div class="mb-3">
             <input autocomplete="off" class="form-control w-auto" name="date" type="date" min="{{ birthdate }}" max="{{ today }}">
             <div class="error-message js-date-error-message"></div>
         </div>
-        <div style="text-align: left; padding-bottom: 10px;">How am I feeling?</div>
+        <div class="am-1">How am I feeling today?</div>
         <div class="mb-3">
             <textarea autocomplete="off" class="form-control mb-3" name="content" rows="7"></textarea>
             <div class="error-message js-error-message2"></div>
+        </div>
+        <div class="mb-3">
+            <div class="am-1">Gratitude
+                <button class="btn btn-secondary" id="prompt-btn" type="button" onclick="showPrompt()">Prompts</button>
+                <p class="display-prompt"></p>
+                <input autocomplete="off" class="form-control mt-2" name="prompt_response" style="display: none;">
+            </div>
         </div>
         <div class="mb-3">
             <button class="btn btn-primary" type="submit">Submit</button>
@@ -40,6 +47,7 @@
                 <tr>
                     <th>Date</th>
                     <th>Content</th>
+                    <th>Gratitude</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,6 +55,7 @@
                     <tr>
                         <td>{{ entry["date"] }}</td>
                         <td>{{ entry["content"] }}</td>
+                        <td>{{ entry["gratitude_content"] }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
