@@ -32,7 +32,7 @@
         </div>
         <!--Stress Generator Question and Response-->
         <div class="mb-3" id="stress-section">
-            <div class="am-1">Stress
+            <div class="am-1">Stress Management
                 <button class="btn btn-success" id="prompt-btn" type="button" onclick="showPrompt('stress-section', 'stress')">Prompts</button>
                 <p class="display-prompt"></p>
                 <input autocomplete="off" class="form-control mt-2" name="stress-response" style="display: none;">
@@ -77,16 +77,22 @@
             <thead class="table-primary text-center">
                 <tr>
                     <th>Date</th>
-                    <th>Content</th>
-                    <th>Gratitude</th>
+                    <th>Mood Responses</th>
+                    <th>Stress Management</th>
+                    <th>Emotional Processing</th>
+                    <th>Self-Reflection</th>
+                    <th>Additional Thoughts</th>
                 </tr>
             </thead>
             <tbody>
                 {% for entry in entries %}
                     <tr>
                         <td>{{ entry["date"] }}</td>
+                        <td>{{ entry["mood"] }}</td>
+                        <td>{{ entry["stress"] }}</td>
+                        <td>{{ entry["emotion"] }}</td>
+                        <td>{{ entry["self_reflection"] }}</td>
                         <td>{{ entry["content"] }}</td>
-                        <td>{{ entry["gratitude_content"] }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

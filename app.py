@@ -150,22 +150,26 @@ def journal_log():
     if request.method == "POST":
         # Retrieve information from journal page
         entry_date = request.form.get("date")
+        mood_response = request.form.get("mood-response")
+        stress_response = request.form.get("stress-response")
+        emotion_response = request.form.get("emotion-response")
+        reflection_response = request.form.get("reflection-response")
         content = request.form.get("content")
-        gratitude_content = request.form.get("prompt_response")
-        if not all([entry_date, content.strip(), gratitude_content.strip()]):
+
+        if not all([entry_date, mood_response, stress_response, emotion_response, reflection_response]):
             flash('One or more fields are missing')
             return redirect("/entry")
 
         # Insert data into table
-        cur.execute("INSERT INTO entries (user_id, date, content, gratitude_content) VALUES (?, ?, ?, ?)",
-                    (session["user_id"], entry_date, content, gratitude_content))
+        cur.execute("INSERT INTO entries (user_id, date, mood, stress, emotion, self_reflection, content) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    (session["user_id"], entry_date, mood_response, stress_response, emotion_response, reflection_response, content))
         # Commit changes
         conn.commit()
         conn.close()
         return redirect("/entry")
 
     # Executes query and prepares the query, but does not return data
-    cur.execute("SELECT date, content, gratitude_content FROM entries WHERE user_id = ? ORDER BY date DESC", (session["user_id"],))
+    cur.execute("SELECT date, mood, stress, emotion, self_reflection, content FROM entries WHERE user_id = ? ORDER BY date DESC", (session["user_id"],))
     # Retrieve all the rows from result set as a list of tuples
     entries = cur.fetchall()
     # Close connection

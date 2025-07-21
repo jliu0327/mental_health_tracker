@@ -25,8 +25,11 @@ cur.execute('''
         id INTEGER PRIMARY KEY,
         user_id INTEGER NOT NULL,
         date DATE NOT NULL,
-        content TEXT NOT NULL,
-        gratitude_content TEXT NOT NULL,
+        mood TEXT NOT NULL,
+        stress TEXT NOT NULL,
+        emotion TEXT NOT NULL,
+        self_reflection TEXT NOT NULL,
+        content TEXT,
         FOREIGN KEY (user_id) REFERENCES users(id)
     )
 ''')
