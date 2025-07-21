@@ -21,16 +21,47 @@
             <input autocomplete="off" class="form-control w-auto" name="date" type="date" min="{{ birthdate }}" max="{{ today }}">
             <div class="error-message js-date-error-message"></div>
         </div>
-        <div class="am-1">How am I feeling today?</div>
-        <div class="mb-3">
-            <textarea autocomplete="off" class="form-control mb-3" name="content" rows="7"></textarea>
-            <div class="error-message js-error-message2"></div>
-        </div>
-        <div class="mb-3">
-            <div class="am-1">Gratitude
-                <button class="btn btn-secondary" id="prompt-btn" type="button" onclick="showPrompt()">Prompts</button>
+        <!--Mood Generator Question and Response-->
+        <div class="mb-3" id="mood-section">
+            <div class="am-1">Today's Mood
+                <button class="btn btn-success" id="prompt-btn" type="button" onclick="showPrompt('mood-section', 'mood')">Prompts</button>
                 <p class="display-prompt"></p>
-                <input autocomplete="off" class="form-control mt-2" name="prompt_response" style="display: none;">
+                <input autocomplete="off" class="form-control mt-2" name="mood-response" style="display: none;">
+                <div class="error-message js-mood-response-error-message"></div>
+            </div>
+        </div>
+        <!--Stress Generator Question and Response-->
+        <div class="mb-3" id="stress-section">
+            <div class="am-1">Stress
+                <button class="btn btn-success" id="prompt-btn" type="button" onclick="showPrompt('stress-section', 'stress')">Prompts</button>
+                <p class="display-prompt"></p>
+                <input autocomplete="off" class="form-control mt-2" name="stress-response" style="display: none;">
+                <div class="error-message js-stress-response-error-message"></div>
+            </div>
+        </div>
+        <!--Emotion Generator Question and Response-->
+        <div class="mb-3" id="emotion-section">
+            <div class="am-1">Emotional Processing
+                <button class="btn btn-success" id="prompt-btn" type="button" onclick="showPrompt('emotion-section', 'emotion')">Prompts</button>
+                <p class="display-prompt"></p>
+                <input autocomplete="off" class="form-control mt-2" name="emotion-response" style="display: none;">
+                <div class="error-message js-emotion-response-error-message"></div>
+            </div>
+        </div>
+        <!--Self Reflection Generator Question and Response-->
+        <div class="mb-3" id="reflection-section">
+            <div class="am-1">Self-Reflection
+                <button class="btn btn-success" id="prompt-btn" type="button" onclick="showPrompt('reflection-section', 'self-reflection')">Prompts</button>
+                <p class="display-prompt"></p>
+                <input autocomplete="off" class="form-control mt-2" name="reflection-response" style="display: none;">
+                <div class="error-message js-reflection-response-error-message"></div>
+            </div>
+        </div>
+        <!--Additional Thoughts users can input-->
+        <div class="mb-3">
+            <div class="am-1">Additional Thoughts/Feelings
+                <textarea autocomplete="off" class="form-control mb-3" name="content" rows="7"></textarea>
+                <div class="error-message js-error-message2"></div>
             </div>
         </div>
         <div class="mb-3">
