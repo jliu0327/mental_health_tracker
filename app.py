@@ -20,7 +20,7 @@ def index():
     user_id = session["user_id"]
 
     # get latest 5 journal entries
-    cur.execute("SELECT date, content FROM entries WHERE user_id = ? ORDER BY date DESC LIMIT 5", (user_id,))
+    cur.execute("SELECT date, mood, stress, emotion, self_reflection, content FROM entries WHERE user_id = ? ORDER BY date DESC LIMIT 4", (user_id,))
     journal_entries = cur.fetchall()
 
     # get latest 5 mood tracker entries

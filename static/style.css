@@ -52,3 +52,18 @@
     font-style: italic;
     margin-top: 10px;
 }
+
+.entry-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.entry-card {
+  border: 1px solid lightgray;
+  border-radius: 20px;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
