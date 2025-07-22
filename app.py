@@ -3,7 +3,7 @@ import os
 from flask import Flask, flash, redirect, render_template, request, session
 from datetime import date, datetime
 from werkzeug.security import check_password_hash, generate_password_hash
-from helper import db_connection, login_required, GENDERS, MOODS, CATEGORIES, PRIORITIES
+from helper import db_connection, login_required, GENDERS, MOODS, CATEGORIES, PRIORITIES, MOOD_MAPS
 
 # Configure application
 app = Flask(__name__, static_folder='static')
@@ -200,9 +200,19 @@ def mood_tracker():
             flash("One or more fields is missing")
             return redirect("/tracker")
 
+        # Convert mood value to numeric value
+        mood_today_val = MOOD_MAPS.get(mood_today, 0)
+        sleep_val = MOOD_MAPS.get(sleep, 0)
+        diet_val = MOOD_MAPS.get(diet, 0)
+        energy_val = MOOD_MAPS.get(energy, 0)
+        stress_val = MOOD_MAPS.get(stress, 0)
+
         # Insert data into table
-        cur.execute("INSERT INTO tracker (user_id, date, mood, sleep, diet, energy, stress) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    (session["user_id"], today_date, mood_today, sleep, diet, energy, stress))
+        cur.execute("""INSERT INTO tracker (user_id, date, mood, mood_val, sleep, sleep_val, 
+                    diet, diet_val, energy, energy_val, stress, stress_val) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    (session["user_id"], today_date, mood_today, mood_today_val, sleep, sleep_val, 
+                     diet, diet_val, energy, energy_val, stress, stress_val))
         # Commit changes
         conn.commit()
         # Close connection
@@ -211,7 +221,22 @@ def mood_tracker():
     else:
         today = date.today()
         birthdate = date.today().replace(year=date.today().year - 10)
-        return render_template("tracker.html", moods=MOODS, birthdate=birthdate, today=today)
+
+        cur.execute("""SELECT date, mood_val, sleep_val, diet_val, energy_val, stress_val 
+                    FROM tracker WHERE user_id = ? ORDER BY date DESC LIMIT 5""", 
+                    (session["user_id"],))
+        mood_rows = cur.fetchall()
+
+        date_value = []
+        for row in mood_rows:
+            date_object = datetime.strptime(row[0], "%Y-%m-%d")
+            date_string = date_object.strftime("%Y-%m-%d")
+            date_value.append(date_string)
+
+        # Close connection
+        conn.close()
+        
+        return render_template("tracker.html", moods=MOODS, birthdate=birthdate, today=today, mood_rows=mood_rows, date_value=date_value)
 
 
 @app.route("/goals", methods=["GET", "POST"])

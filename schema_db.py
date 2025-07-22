@@ -41,10 +41,15 @@ cur.execute('''
         user_id INTEGER NOT NULL,
         date DATE NOT NULL,
         mood TEXT NOT NULL,
+        mood_val INTEGER NOT NULL,
         sleep TEXT NOT NULL,
+        sleep_val INTEGER NOT NULL,
         diet TEXT NOT NULL,
+        diet_val INTEGER NOT NULL,
         energy TEXT NOT NULL,
+        energy_val INTEGER NOT NULL,
         stress TEXT NOT NULL,
+        stress_val INTEGER NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users(id)
     )
 ''')

@@ -38,6 +38,14 @@ PRIORITIES = [
     "High"
 ]
 
+# Convert mood to numeric values
+MOOD_MAPS = {
+    "😀 Great": 5,
+    "🙂 Good": 4,
+    "😐 Neutral": 3,
+    "🙁 Not good": 2,
+    "😞 Terrible": 1
+}
 
 # connect to same database
 def db_connection():
