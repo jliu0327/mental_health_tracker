@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+/* document.addEventListener('DOMContentLoaded', () => {
   const dateLabel = ["2025-07-20", "2025-07-21", "2025-07-22", "2025-07-23", "2025-07-24"];
 
   const moodChart = document.getElementById('moodRadarChart').getContext('2d');
@@ -15,4 +15,4 @@ document.addEventListener('DOMContentLoaded', () => {
       }]
     },
   });
-});
+}); */

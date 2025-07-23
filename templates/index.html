@@ -39,4 +39,27 @@
             </tr>
         {% endfor %}
     </table>
+    <script>
+        /*
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateLabel = {{ dates | tojson | safe }};
+            const moodValue = {{ mood_val | tojson | safe }};
+
+            const moodChart = document.getElementById('moodRadarChart').getContext('2d');
+
+            new Chart(moodChart, {
+                type: 'line',
+                data: {
+                    labels: dateLabel,
+                    datasets: [{
+                        label: 'Mood Tracker',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: moodValue
+                    }]
+                },
+            });
+        });
+        */
+    </script>
 {% endblock %}

@@ -24,8 +24,15 @@ def index():
     journal_entries = cur.fetchall()
 
     # get latest 5 mood tracker entries
-    cur.execute("SELECT date, mood, sleep, diet, energy, stress FROM tracker WHERE user_id = ? ORDER BY date DESC LIMIT 5", (user_id,))
-    mood_entries = cur.fetchall()
+    cur.execute("SELECT date, mood_val, sleep_val, diet_val, energy_val, stress_val FROM tracker WHERE user_id = ? ORDER BY date DESC LIMIT 5", 
+    (user_id,))
+    mood_rows = cur.fetchall()[::-1]
+
+    dates = []
+    mood_val = []
+    for row in mood_rows:
+        dates.append(row[0])
+        mood_val.append(row[1])
 
     # get latest 5 goal entries
     cur.execute("SELECT goal_title, category, description, due_date, priority FROM goals WHERE user_id = ? ORDER BY due_date LIMIT 5", (user_id,))
@@ -35,8 +42,9 @@ def index():
     
     return render_template("index.html",
                            journal_entries = journal_entries,
-                           mood_entries = mood_entries,
-                           goal_entries = goal_entries)
+                           goal_entries = goal_entries,
+                           dates=dates,
+                           mood_val=mood_val)
 
 
 # Log in users
@@ -221,22 +229,8 @@ def mood_tracker():
     else:
         today = date.today()
         birthdate = date.today().replace(year=date.today().year - 10)
-
-        cur.execute("""SELECT date, mood_val, sleep_val, diet_val, energy_val, stress_val 
-                    FROM tracker WHERE user_id = ? ORDER BY date DESC LIMIT 5""", 
-                    (session["user_id"],))
-        mood_rows = cur.fetchall()
-
-        date_value = []
-        for row in mood_rows:
-            date_object = datetime.strptime(row[0], "%Y-%m-%d")
-            date_string = date_object.strftime("%Y-%m-%d")
-            date_value.append(date_string)
-
-        # Close connection
-        conn.close()
         
-        return render_template("tracker.html", moods=MOODS, birthdate=birthdate, today=today, mood_rows=mood_rows, date_value=date_value)
+        return render_template("tracker.html", moods=MOODS, birthdate=birthdate, today=today)
 
 
 @app.route("/goals", methods=["GET", "POST"])
