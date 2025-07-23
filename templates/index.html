@@ -40,10 +40,13 @@
         {% endfor %}
     </table>
     <script>
-        /*
         document.addEventListener('DOMContentLoaded', () => {
             const dateLabel = {{ dates | tojson | safe }};
             const moodValue = {{ mood_val | tojson | safe }};
+            const sleepValue = {{ sleep_val | tojson | safe }};
+            const dietValue = {{ diet_val | tojson | safe }};
+            const energyValue = {{ energy_val | tojson | safe }};
+            const stressValue = {{ stress_val | tojson | safe }};
 
             const moodChart = document.getElementById('moodRadarChart').getContext('2d');
 
@@ -52,14 +55,42 @@
                 data: {
                     labels: dateLabel,
                     datasets: [{
-                        label: 'Mood Tracker',
+                        label: 'Mood',
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
-                        data: moodValue
+                        data: moodValue,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Sleep',
+                        backgroundColor: 'rgb(55, 160, 245)',
+                        borderColor: 'rgb(55, 160, 245)',
+                        data: sleepValue,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Diet',
+                        backgroundColor: 'rgb(255, 165, 0)',
+                        borderColor: 'rgb(255, 165, 0)',
+                        data: dietValue,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Energy',
+                        backgroundColor: 'rgb(255, 215, 0)',
+                        borderColor: 'rgb(255, 215, 0)',
+                        data: energyValue,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Stress',
+                        backgroundColor: 'rgb(110, 200, 56)',
+                        borderColor: 'rgb(110, 200, 56)',
+                        data: stressValue,
+                        tension: 0.3
                     }]
                 },
             });
         });
-        */
     </script>
 {% endblock %}

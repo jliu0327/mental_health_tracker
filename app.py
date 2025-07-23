@@ -30,9 +30,17 @@ def index():
 
     dates = []
     mood_val = []
+    sleep_val = []
+    diet_val = []
+    energy_val = []
+    stress_val = []
     for row in mood_rows:
         dates.append(row[0])
         mood_val.append(row[1])
+        sleep_val.append(row[2])
+        diet_val.append(row[3])
+        energy_val.append(row[4])
+        stress_val.append(row[5])
 
     # get latest 5 goal entries
     cur.execute("SELECT goal_title, category, description, due_date, priority FROM goals WHERE user_id = ? ORDER BY due_date LIMIT 5", (user_id,))
@@ -44,7 +52,11 @@ def index():
                            journal_entries = journal_entries,
                            goal_entries = goal_entries,
                            dates=dates,
-                           mood_val=mood_val)
+                           mood_val=mood_val,
+                           sleep_val=sleep_val,
+                           diet_val=diet_val,
+                           energy_val=energy_val,
+                           stress_val=stress_val)
 
 
 # Log in users
