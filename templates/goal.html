@@ -60,35 +60,59 @@
 
     <!-- Visualization of goals table-->
     <hr>
-    <h3 style="padding-top: 15px; padding-bottom: 15px;">My Goals</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Due Date</th>
-                <th>Priority Level</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for goal in goals %}
-                <tr>
-                    <td>
-                        <form action="/complete_goal" method="post">
-                            <input type="hidden" name="goal_id" value="{{ goal['id'] }}">
-                            <input type="checkbox" name="completed" onchange="this.form.submit()" {% if goal['completed'] %}checked{% endif %}>
-                        </form>
-                    </td>
-                    <td>{{ goal['goal_title'] }}</td>
-                    <td>{{ goal['category'] }}</td>
-                    <td>{{ goal['description'] }}</td>
-                    <td>{{ goal['due_date'] }}</td>
-                    <td>{{ goal['priority'] }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</form>
+    <h3 style="padding-top: 15px; padding-bottom: 15px;">Current Goals</h3>
+    {% if goals %}  
+        <div style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Goal</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Due Date</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for goal in goals %}
+                        <tr>
+                            <td>
+                                <form action="/complete_goal" method="post">
+                                <input type="hidden" name="goal_id" value="{{ goal['id'] }}">
+                                <input type="checkbox" name="completed" onchange="this.form.submit()" {% if goal['completed'] %}checked{% endif %}>
+                                </form>
+                            </td>
+                            <td>{{ goal['goal_title'] }}</td>
+                            <td>{{ goal['category'] }}</td>
+                            <td>{{ goal['description'] }}</td>
+                            <td>{{ goal['due_date'] }}</td>
+                            <td>{{ goal['priority'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div>
+    {% endif %}
+    {% if completed_goals %}
+    <h3 style="padding-top: 15px; padding-bottom: 15px;">Completed Goals</h3>
+        <div style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Goal</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for goal in completed_goals %}
+                        <td>{{ goal['goal_title'] }}</td>
+                        <td>{{ goal['category'] }}</td>
+                        <td>{{ goal['description'] }}</td>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}

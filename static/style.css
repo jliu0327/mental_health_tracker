@@ -20,7 +20,7 @@
 }
 
 .heading-space {
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
 }
 
 .custom-width1 {
@@ -53,6 +53,15 @@
     margin-top: 10px;
 }
 
+h2, h3 {
+    font-family: 'Comic Sans MS';
+    font-weight: bold;
+}
+
+p, th, td, div {
+    font-family: 'Comic Sans MS';
+}
+
 .entry-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -62,8 +71,14 @@
 
 .entry-card {
   border: 1px solid lightgray;
+  font-size: 14px;
   border-radius: 20px;
   padding: 1rem;
   background-color: #f9f9f9;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.entry-card:hover {
+    transform: scale(1.05);
 }

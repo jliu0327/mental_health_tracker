@@ -72,30 +72,32 @@
     <hr>
 
     <h2 style="padding-top: 15px; padding-bottom: 15px;"><b>My Entries</b></h2>
-    <div style="max-height: 400px; overflow-y: auto;">
-        <table class="table table-striped table-bordered">
-            <thead class="table-primary text-center">
-                <tr>
-                    <th>Date</th>
-                    <th>Mood Responses</th>
-                    <th>Stress Management</th>
-                    <th>Emotional Processing</th>
-                    <th>Self-Reflection</th>
-                    <th>Additional Thoughts</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for entry in entries %}
+    {% if entries %}
+        <div style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-striped table-bordered">
+                <thead class="table-primary text-center">
                     <tr>
-                        <td>{{ entry["date"] }}</td>
-                        <td>{{ entry["mood"] }}</td>
-                        <td>{{ entry["stress"] }}</td>
-                        <td>{{ entry["emotion"] }}</td>
-                        <td>{{ entry["self_reflection"] }}</td>
-                        <td>{{ entry["content"] }}</td>
+                        <th>Date</th>
+                        <th>Mood Responses</th>
+                        <th>Stress Management</th>
+                        <th>Emotional Processing</th>
+                        <th>Self-Reflection</th>
+                        <th>Additional Thoughts</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    {% for entry in entries %}
+                        <tr>
+                            <td>{{ entry["date"] }}</td>
+                            <td>{{ entry["mood"] }}</td>
+                            <td>{{ entry["stress"] }}</td>
+                            <td>{{ entry["emotion"] }}</td>
+                            <td>{{ entry["self_reflection"] }}</td>
+                            <td>{{ entry["content"] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}

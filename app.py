@@ -24,7 +24,7 @@ def index():
     journal_entries = cur.fetchall()
 
     # get latest 5 mood tracker entries
-    cur.execute("SELECT date, mood_val, sleep_val, diet_val, energy_val, stress_val FROM tracker WHERE user_id = ? ORDER BY date DESC LIMIT 5", 
+    cur.execute("SELECT date, mood_val, sleep_val, diet_val, energy_val, stress_val FROM tracker WHERE user_id = ? ORDER BY date DESC LIMIT 10", 
     (user_id,))
     mood_rows = cur.fetchall()[::-1]
 
@@ -43,7 +43,7 @@ def index():
         stress_val.append(row[5])
 
     # get latest 5 goal entries
-    cur.execute("SELECT goal_title, category, description, due_date, priority FROM goals WHERE user_id = ? ORDER BY due_date LIMIT 5", (user_id,))
+    cur.execute("SELECT goal_title, category, description, due_date, priority FROM goals WHERE user_id = ? AND completed = 0 ORDER BY due_date LIMIT 5", (user_id,))
     goal_entries = cur.fetchall()
 
     conn.close()
@@ -275,13 +275,16 @@ def goal_tracker():
         return redirect("/goals")
 
     # Show user's goals
-    cur.execute("SELECT * FROM goals WHERE user_id = ?", (session["user_id"],))
+    cur.execute("SELECT * FROM goals WHERE user_id = ? AND completed = 0", (session["user_id"],))
     goals_data = cur.fetchall()
+    # Show user's completed goals
+    cur.execute("SELECT goal_title, category, description FROM goals WHERE user_id = ? AND completed = 1", (session["user_id"],))
+    completed_goals = cur.fetchall()
     # Close connection
     conn.close()
 
     today = date.today()
-    return render_template("goal.html", goals=goals_data, today=today, categories=CATEGORIES, priorities=PRIORITIES)
+    return render_template("goal.html", goals=goals_data, completed_goals=completed_goals, today=today, categories=CATEGORIES, priorities=PRIORITIES)
 
 
 @app.route("/complete_goal", methods=["POST"])
