@@ -7,7 +7,7 @@ from helper import db_connection, login_required, GENDERS, MOODS, CATEGORIES, PR
 
 # Configure application
 app = Flask(__name__, static_folder='static')
-app.secret_key = 'wNZZI1OYWT'
+app.secret_key = os.environ.get('SECRET_KEY')
 
 
 @app.route("/")
