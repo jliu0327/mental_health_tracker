@@ -42,17 +42,23 @@
                 <input autocomplete="off" class="form-control custom-width1" name="dob" id="dob" type="date" min="{{ min_date }}" max="{{ birthdate }}" required>
             </div>
         </div>
-        <div class="mb-3 am-1">
-            <label for="username">Username</label>
-            <input autocomplete="off" class="form-control mx-auto custom-width2" name="username" id="username" placeholder="Enter a username" required type="text">
+        <div class="mb-3 d-flex justify-content-center">
+            <div class="custom-width2">
+                <label for="username">Username</label>
+                <input autocomplete="off" class="form-control mx-auto custom-width2" name="username" id="username" placeholder="Enter a username" required type="text">
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="password">Password (8 or more characters)</label>
-            <input autocomplete="off" class="form-control mx-auto custom-width2" minlength="8" name="password" placeholder="Enter a password" required type="password">
+        <div class="mb-3 d-flex justify-content-center">
+            <div class="custom-width2">
+                <label for="password">Password (8 or more characters)</label>
+                <input autocomplete="off" class="form-control mx-auto custom-width2" minlength="8" name="password" placeholder="Enter a password" required type="password">
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="confirmation">Confirm password</label>
-            <input autocomplete="off" class="form-control mx-auto custom-width2" name="confirmation" id="confirmation" placeholder="Re-enter the password to confirm" required type="password">
+        <div class="mb-3 d-flex justify-content-center">
+            <div class="custom-width2">
+                <label for="confirmation">Confirm password</label>
+                <input autocomplete="off" class="form-control mx-auto custom-width2" name="confirmation" id="confirmation" placeholder="Re-enter the password to confirm" required type="password">
+            </div>
         </div>
         <button class="btn btn-primary" type="submit">Register</button>
     </form>
