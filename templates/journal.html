@@ -16,9 +16,11 @@
     {% endwith %}
 
     <form action="/entry" method="post" class="js-journal-form">
-        <div class="am-1">Date:</div>
+        <div class="am-1">
+            <label for="date">Date:</label>
+        </div>
         <div class="mb-3">
-            <input autocomplete="off" class="form-control w-auto" name="date" type="date" min="{{ birthdate }}" max="{{ today }}">
+            <input autocomplete="off" class="form-control w-auto" name="date" id="date" type="date" min="{{ birthdate }}" max="{{ today }}">
             <div class="error-message js-date-error-message"></div>
         </div>
         <!--Mood Generator Question and Response-->
@@ -59,8 +61,9 @@
         </div>
         <!--Additional Thoughts users can input-->
         <div class="mb-3">
-            <div class="am-1">Additional Thoughts/Feelings
-                <textarea autocomplete="off" class="form-control mb-3" name="content" rows="7"></textarea>
+            <div class="am-1">
+                <label for="additional-thoughts">Additional Thoughts/Feelings</label>
+                <textarea autocomplete="off" class="form-control mb-3" name="additional-thoughts" id="additional-thoughts" rows="7"></textarea>
                 <div class="error-message js-error-message2"></div>
             </div>
         </div>

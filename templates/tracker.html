@@ -18,9 +18,11 @@
     <form action="/tracker" method="post" class="js-mood-form">
         <div class="js-success-alert"></div>
         <h2 class="mb-4">Mood Tracker</h2>
-        <div style="text-align: left;">Date:</div>
         <div class="mb-3">
-            <input autocomplete="off" class="form-control w-auto" name="date" type="date" min="{{ birthdate }}" max="{{ today }}">
+            <h4 class="mb-3 text-start"><label for="date">Date:</label></h4>
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control w-auto" name="date" id="date" type="date" min="{{ birthdate }}" max="{{ today }}">
             <div class="error-message js-error-date"></div>
         </div>
         <!-- Mood today -->

@@ -111,8 +111,8 @@ def logout():
 def register():
     # User reached route via POST (through submitting form)
     if request.method == "POST":
-        first_name = request.form.get("first")
-        last_name = request.form.get("last")
+        first_name = request.form.get("first-name")
+        last_name = request.form.get("last-name")
         gender = request.form.get("gender")
         date_of_birth = request.form.get("dob")
         username = request.form.get("username")
@@ -174,15 +174,15 @@ def journal_log():
         stress_response = request.form.get("stress-response")
         emotion_response = request.form.get("emotion-response")
         reflection_response = request.form.get("reflection-response")
-        content = request.form.get("content")
+        additional_thoughts = request.form.get("additional-thoughts")
 
         if not all([entry_date, mood_response, stress_response, emotion_response, reflection_response]):
             flash('One or more fields are missing')
             return redirect("/entry")
 
         # Insert data into table
-        cur.execute("INSERT INTO entries (user_id, date, mood, stress, emotion, self_reflection, content) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    (session["user_id"], entry_date, mood_response, stress_response, emotion_response, reflection_response, content))
+        cur.execute("INSERT INTO entries (user_id, date, mood, stress, emotion, self_reflection, additional_thoughts) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    (session["user_id"], entry_date, mood_response, stress_response, emotion_response, reflection_response, additional_thoughts))
         # Commit changes
         conn.commit()
         conn.close()

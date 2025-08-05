@@ -20,34 +20,39 @@
         <div class="mb-3 d-flex justify-content-center gap-4">
             <div class="am-1">
                 <label for="first-name">First Name</label>
-                <input autocomplete="off" autofocus class="form-control custom-width1" name="first-name" id="first-name" placeholder="First Name" type="text">
+                <input autocomplete="off" autofocus class="form-control custom-width1" name="first-name" id="first-name" placeholder="Enter first name" required type="text">
             </div>
             <div class="am-1">
                 <label for="last-name">Last Name</label>
-                <input autocomplete="off" class="form-control custom-width1" name="last-name" id="last-name" placeholder="Last Name" type="text"> 
+                <input autocomplete="off" class="form-control custom-width1" name="last-name" id="last-name" placeholder="Enter last Name" required type="text"> 
             </div>
         </div>
         <div class="mb-3 d-flex justify-content-center gap-4">
-            <div class="am-1">Gender
-                <select class="form-select custom-width1" id="gender" name="gender">
+            <div class="am-1">
+                <label for="gender">Gender</label>
+                <select class="form-select custom-width1" id="gender" name="gender" required>
                     <option disabled selected value=""></option>
                     {% for gender in genders %}
                         <option value="{{ gender }}">{{ gender }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div class="am-1">Date of birth
-                <input autocomplete="off" class="form-control custom-width1" name="dob" type="date" min="{{ min_date }}" max="{{ birthdate }}">
+            <div class="am-1">
+                <label for="dob">Date of birth</label>
+                <input autocomplete="off" class="form-control custom-width1" name="dob" id="dob" type="date" min="{{ min_date }}" max="{{ birthdate }}" required>
             </div>
         </div>
         <div class="mb-3 am-1">
-            <input autocomplete="off" class="form-control mx-auto custom-width2" name="username" placeholder="Username" type="text">
+            <label for="username">Username</label>
+            <input autocomplete="off" class="form-control mx-auto custom-width2" name="username" id="username" placeholder="Enter a username" required type="text">
         </div>
         <div class="mb-3">
-            <input autocomplete="off" class="form-control mx-auto custom-width2" name="password" placeholder="Password" type="password">
+            <label for="password">Password (8 or more characters)</label>
+            <input autocomplete="off" class="form-control mx-auto custom-width2" minlength="8" name="password" placeholder="Enter a password" required type="password">
         </div>
         <div class="mb-3">
-            <input autocomplete="off" class="form-control mx-auto custom-width2" name="confirmation" placeholder="Confirm Password" type="password">
+            <label for="confirmation">Confirm password</label>
+            <input autocomplete="off" class="form-control mx-auto custom-width2" name="confirmation" id="confirmation" placeholder="Re-enter the password to confirm" required type="password">
         </div>
         <button class="btn btn-primary" type="submit">Register</button>
     </form>
