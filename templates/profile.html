@@ -18,9 +18,10 @@
   <form action="/profile" method="post">
     <div class="mb-3 d-flex justify-content-center gap-4">
       <div>
-        <div class="am-1">First name
-          <input class="form-control custom-width4" name="first_name" value="{{ first_name }}">
+        <div class="am-1">
+          <label for="first_name">First name</label>
         </div>
+        <input class="form-control custom-width4" name="first_name" id="first_name" value="{{ first_name }}">
       </div>
       <div>
         <div class="am-1">Last name
