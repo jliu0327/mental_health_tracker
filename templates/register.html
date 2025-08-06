@@ -19,17 +19,17 @@
         <h2 style="margin-bottom: 2rem;">Fill out the information below to sign up</h2>
         <div class="mb-2 d-flex justify-content-center gap-4">
             <div class="am-1">
-                <label for="first-name">First Name</label>
+                <label for="first-name" class="form-label mb-1">First Name</label>
                 <input autocomplete="off" autofocus class="form-control custom-width1" name="first-name" id="first-name" placeholder="Enter first name" required type="text">
             </div>
             <div class="am-1">
-                <label for="last-name">Last Name</label>
+                <label for="last-name" class="form-label mb-1">Last Name</label>
                 <input autocomplete="off" class="form-control custom-width1" name="last-name" id="last-name" placeholder="Enter last Name" required type="text"> 
             </div>
         </div>
-        <div class="mb-2 d-flex justify-content-center gap-4">
+        <div class="mb-3 d-flex justify-content-center gap-4">
             <div class="am-1">
-                <label for="gender">Gender</label>
+                <label for="gender" class="form-label mb-1">Gender</label>
                 <select class="form-select custom-width1" id="gender" name="gender" required>
                     <option disabled selected value=""></option>
                     {% for gender in genders %}
@@ -38,7 +38,7 @@
                 </select>
             </div>
             <div class="am-1">
-                <label for="dob">Date of birth</label>
+                <label for="dob" class="form-label mb-1">Date of birth</label>
                 <input autocomplete="off" class="form-control custom-width1" name="dob" id="dob" type="date" min="{{ min_date }}" max="{{ birthdate }}" required>
             </div>
         </div>
