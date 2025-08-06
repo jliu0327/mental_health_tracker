@@ -31,28 +31,36 @@
       </div>
     </div>
     <div class="mb-3 d-flex justify-content-center gap-4">
-      <div class="am-1">
-        <label for="username">Username</label>
+      <div>
+        <div class="am-1">
+          <label for="username">Username</label>
+        </div>
+        <input class="form-control custom-width5" name="username" id="username" value="{{ username }}">
       </div>
-      <input class="form-control custom-width5" name="username" id="username" value="{{ username }}">
     </div>
     <div class="mb-3 d-flex justify-content-center gap-4">
-      <div class="am-1">
-        <label for="current_password">Current Password</label>
+      <div>
+        <div class="am-1">
+          <label for="current_password">Current Password</label>
+        </div>
+        <input class="form-control custom-width5" name="current_password" id="current_password" placeholder="Current password" type="password">
       </div>
-      <input class="form-control custom-width5" name="current_password" id="current_password" placeholder="Current password" type="password">
     </div>
     <div class="mb-3 d-flex justify-content-center gap-4">
-      <div class="am-1">
-        <label for="new_password">New Password</label>
+      <div>
+        <div class="am-1">
+          <label for="new_password">New Password</label>
+        </div>
+        <input class="form-control custom-width5" name="new_password" id="new_password" placeholder="New password" type="password">
       </div>
-      <input class="form-control custom-width5" name="new_password" id="new_password" placeholder="New password" type="password">
     </div>
     <div class="mb-3 d-flex justify-content-center gap-4">
-      <div class="am-1">
-        <label for="confirm_password">Confirm Password</label>
+      <div>
+        <div class="am-1">
+          <label for="confirm_password">Confirm Password</label>
+        </div>
+        <input class="form-control custom-width5" name="confirm_password" id="confirm_password" placeholder="Confirm new password" type="password">
       </div>
-      <input class="form-control custom-width5" name="confirm_password" id="confirm_password" placeholder="Confirm new password" type="password">
     </div>
     <div>
       <button class="btn btn-primary" type="submit" name="action" value="save">Save</button>
