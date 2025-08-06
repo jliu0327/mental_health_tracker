@@ -256,7 +256,7 @@ def goal_tracker():
         goals = request.form.get("set_goals")
         category = request.form.get("category")
         description = request.form.get("description")
-        due_date = request.form.get("date")
+        due_date = request.form.get("target_date")
         priority = request.form.get("priority")
 
         if not goals:

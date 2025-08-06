@@ -17,14 +17,18 @@
 
     <!-- Form to create a goal -->
     <form action="/goals" method="post" class="js-goal-form">
-        <div class="am-1">Goals I want to accomplish:</div>
+        <div class="am-1">
+            <label for="set_goals">Goals I want to accomplish:</label>
+        </div>
         <div class="mb-3">
-            <input autocomplete="off" class="form-control" name="set_goals" type="text">
+            <input autocomplete="off" class="form-control" name="set_goals" id="set_goals" type="text">
             <div class="error-message js-error-set_goals"></div>
         </div>
         <div class="mb-3 d-flex justify-content gap-4">
             <div>
-                <div class="am-1">Category</div>
+                <div class="am-1">
+                    <label for="category">Category</label>
+                </div>
                 <select class="form-select mb-3 custom-width4" id="category" name="category">
                     <option disabled selected value=""></option>
                     {% for category in categories %}
@@ -34,12 +38,16 @@
                 <div class="error-message js-error-category"></div>
             </div>
             <div>
-                <div class="am-1">Target Date:</div>
-                <input class="form-control mb-3 custom-width4" name="date" type="date" min="{{ today }}">
+                <div class="am-1">
+                    <label for="target_date">Target Date:</label>
+                </div>
+                <input class="form-control mb-3 custom-width4" name="target_date" id="target_date" type="date" min="{{ today }}">
                 <div class="error-message js-error-date"></div>
             </div>
             <div>
-                <div class="am-1">Goal Priority</div>
+                <div class="am-1">
+                    <label for="priority">Goal Priority</label>
+                </div>
                 <select class="form-select mb-3 custom-width4" id="priority" name="priority">
                     <option disabled selected value=""></option>
                     {% for priority in priorities %}
@@ -49,9 +57,11 @@
                 <div class="error-message js-error-priority"></div>
             </div>
         </div>
-        <div class="am-1">Additional Thoughts</div>
+        <div class="am-1">
+            <label for="description">Additional Thoughts</label>
+        </div>
         <div class="mb-4">
-            <textarea autocomplete="off" class="form-control" name="description" rows="3" placeholder="Why / How"></textarea>
+            <textarea autocomplete="off" class="form-control" name="description" id="description" rows="3" placeholder="Why / How"></textarea>
         </div>
         <div class="text-end text-center">
             <button class="btn btn-primary" type="submit">Add Goal</button>
